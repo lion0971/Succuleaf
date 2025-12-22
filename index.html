@@ -28,6 +28,18 @@
       /* 加上 top 才會黏住 */
     }
 
+    /* Scattered → gather 圖片 */
+
+    .succ {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      /* 從上方開始 */
+      transform: translate(-50%, 0);
+      max-width: 150px;
+      transition: transform 0.2s linear, opacity 0.2s linear;
+    }
+
 
     /*左半部廣告輪播 */
     .ads-notice {
@@ -177,7 +189,50 @@
       line-height: 1.75rem;
     }
 
-    /*橫向圖片滑動*/
+    .content {
+      position: sticky;
+      top: 0;
+      /* sticky 必須有定位點 */
+      height: 100vh;
+      /* 才能垂直置中 */
+      display: flex;
+      align-items: center;
+      /* 垂直置中 */
+      justify-content: center;
+      /* 水平置中 */
+      z-index: 1;
+      color: white;
+      font-size: 2rem;
+    }
+
+    #plant-layer {
+      position: absolute;
+      inset: 0;
+    }
+
+    #title-block {
+      width: 90%;
+      height: 50%;
+      z-index: 20;
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #title-block h3 {
+      font-size: 2.25rem;
+      font-weight: bold;
+    }
+
+    #title-block p {
+      color: #4b5563;
+      margin-top: 0.5rem;
+    }
+
+    /*橫向圖片滑動-起*/
     .container {
       width: 80%;
       /* 容器寬度 */
@@ -201,38 +256,9 @@
       margin-right: 10px;
       object-fit: cover;
     }
-
     /*橫向圖片滑動-止*/
-
-
-    /* Card & Grid */
-    .grid {
-      display: grid;
-      gap: 2rem;
-    }
-
-    @media (min-width: 640px) {
-      .grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    /* Footer */
-    footer {
-      padding: 3rem 1rem;
-      text-align: center;
-      color: #666;
-    }
   </style>
 </head>
-
-
 <body>
 
   <!-- Header -->
@@ -270,7 +296,7 @@
         </div>
       </div>
     </div>
-  <!--分散到聚集的花-->
+    <!--分散到聚集的花-->
     <div class="together1">
       <img src="./images/index/succulenturn.png" class="succ" id="s1">
       <img src="./images/index/succulenturn1.png" class="succ" id="s2">
@@ -347,12 +373,13 @@
   <!-- Footer -->
   <footer>© 文青多肉植藝</footer>
 
-<!-- 回到最頂端 -->
- <button id="backToTopBtn" title="回到最頂端">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 19V5M5 12l7-7 7 7"/>
+  <!-- 回到最頂端 -->
+  <button id="backToTopBtn" title="回到最頂端">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7" />
     </svg>
-</button>
+  </button>
 
 
   <script>

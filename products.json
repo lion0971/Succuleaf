@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "name": "蝴蝶之舞錦",
+    "description": "粉紅小滾邊療癒的小巧植栽。",
+    "price": 350,
+    "image": "./images/index/succulenturn3.png"
+  },
+  {
+    "id": 2,
+    "name": "月影多肉",
+    "description": "色系粉嫩，線條柔和，非常適合桌上小景。",
+    "price": 300,
+    "image": "./images/index/succulenturn1.png"
+  },
+  {
+    "id": 3,
+    "name": "丸葉松綠",
+    "description": "堅韌特質佳人滿分的小巧植栽。",
+    "price": 250,
+    "image": "./images/index/succulenturn2.png"
+  },
+  {
+    "id": 4,
+    "name": "白鳳",
+    "description": "被夢幻紫邊繚繞療癒的小巧植栽。",
+    "price": 350,
+    "image": "./images/index/succulenturn4.png"
+  },
+  {
+    "id": 5,
+    "name": "紫蝶",
+    "description": "被夢幻紫邊繚繞療癒的小巧植栽。",
+    "price": 350,
+    "image": "./images/index/succulenturn5.png"
+  },
+  {
+    "id": 6,
+    "name": "玉露",
+    "description": "被精靈圍繞的夢幻清透療癒小巧植栽。",
+    "price": 350,
+    "image": "./images/index/succulenturn6.png"
+  },
+  {
+    "id": 7,
+    "name": "桃之卵",
+    "description": "圓潤可愛的蛋形療癒的小巧植栽。",
+    "price": 350,
+    "image": "./images/index/succulenturn7.png"
+  },
+  {
+    "id": 8,
+    "name": "紅邊石蓮",
+    "description": "具堅毅特質美的療癒的小巧植栽。",
+    "price": 350,
+    "image": "./images/index/succulenturn8.png"
+  },
+  {
+    "id": 9,
+    "name": "嬰兒手指",
+    "description": "具小巧肥嫩嫩特質的療癒的小巧植栽。",
+    "price": 350,
+    "image": "./images/index/succulenturn9.png"
+  }
+]

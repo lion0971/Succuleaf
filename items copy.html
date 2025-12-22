@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Succuleaf_迷你展示</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <script src="./js/script.js"></script>
+  <style>
+    body {
+      line-height: 2;
+      background-image: url(./images/index/ads/ads6.jpg);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div style="position: relative;">
+
+      <h1 style="font-size: 2.25rem;font-weight: normal;">
+        <a href="./index.html" style="text-decoration: none; color: inherit;">
+          <img class="logo" src="./images/index/logo.png">
+          <span>SuccuLeaf</span> 溯植綠
+        </a>
+      </h1>
+    </div>
+
+    <nav class="nav-desktop">
+      <a href="./brand.html">品牌故事</a>
+      <a href="./items.html">迷你展示</a>
+      <a href="./contact.html">聯絡我們</a>
+    </nav>
+  </header>
+  <main style="margin-top: 10rem"></main>
+  <section
+    style="border-radius: 10vh; padding: 2rem; max-width:80rem; margin:0 auto; text-align:center;background-color: rgba(255, 255, 255, 0.617)">
+    <h2 style="font-size:2.5rem; margin-bottom:3rem;">迷你展示</h2>
+    <div class="grid grid-2 grid-3">
+      <div class="card">
+        <img src="./images/index/succulenturn3.png" />
+        <h3>蝴蝶之舞錦</h3>
+        <p>粉紅小滾邊療癒的小巧植栽。</p>
+        <button onclick="addToCart('蝴蝶之舞錦','蝴蝶之舞錦',350,'./images/index/succulenturn3.png')">加入購物車</button>
+      </div>
+      <div class="card">
+        <img src="./images/index/succulenturn1.png" />
+        <h3>月影多肉</h3>
+        <p>色系粉嫩，線條柔和，非常適合桌上小景。</p>
+        <button onclick="addToCart('月影多肉','月影多肉',300,'./images/index/succulenturn1.png')">加入購物車</button>
+      </div>
+
+      <div class="card">
+        <img src="./images/index/succulenturn2.png" />
+        <h3>丸葉松綠</h3>
+        <p>堅韌特質佳人滿分的小巧植栽。</p>
+        <button onclick="addToCart('丸葉松綠','丸葉松綠',250,'./images/index/succulenturn2.png')">加入購物車</button>
+      </div>
+      <div class="card">
+        <img src="./images/index/succulenturn4.png" />
+        <h3>白鳳</h3>
+        <p>被夢幻紫邊繚繞療癒的小巧植栽。</p>
+        <button onclick="addToCart('白鳳','白鳳',350,'./images/index/succulenturn4.png')">加入購物車</button>
+      </div>
+      
+      <div class="card">
+        <img src="./images/index/succulenturn5.png" />
+        <h3>紫蝶</h3>
+        <p>被夢幻紫邊繚繞療癒的小巧植栽。</p>
+        <button onclick="addToCart('紫蝶','紫蝶',350,'./images/index/succulenturn5.png')">加入購物車</button>
+      </div>
+      <div class="card">
+        <img src="./images/index/succulenturn6.png" />
+        <h3>玉露</h3>
+        <p>被精靈圍繞的夢幻清透療癒小巧植栽。</p>
+        <button onclick="addToCart('玉露','玉露',350,'./images/index/succulenturn6.png')">加入購物車</button>
+      </div>
+      <div class="card">
+        <img src="./images/index/succulenturn7.png" />
+        <h3>桃之卵</h3>
+        <p>圓潤可愛的蛋形療癒的小巧植栽。</p>
+        <button onclick="addToCart('桃之卵','桃之卵',350,'./images/index/succulenturn7.png')">加入購物車</button>
+      </div>
+      <div class="card">
+        <img src="./images/index/succulenturn8.png" />
+        <h3>紅邊石蓮</h3>
+        <p>具堅毅特質美的療癒的小巧植栽。</p>
+        <button onclick="addToCart('紅邊石蓮','紅邊石蓮',350,'./images/index/succulenturn8.png')">加入購物車</button>
+      </div>
+      <div class="card">
+        <img src="./images/index/succulenturn9.png" />
+        <h3>嬰兒手指</h3>
+        <p>具小巧肥嫩嫩特質的療癒的小巧植栽。</p>
+        <button onclick="addToCart('嬰兒手指','嬰兒手指',350,'./images/index/succulenturn9.png')">加入購物車</button>
+      </div>
+
+    </div>
+    <br>
+    <br>
+    <button class="checkout-btn" onclick="goCheckout()">前往結帳</button>
+  </section>
+
+  <footer>
+    © 2025 SuccuLeaf 多肉生活
+  </footer>
+
+  <button id="backToTopBtn" title="回到最頂端">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  </button>
+
+  <script>
+    function addToCart(id, name, price, img) {
+      let cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+
+      const item = cart.find(p => p.id === id);
+      if (item) {
+        item.qty += 1;
+      } else {
+        cart.push({ id, name, price, img, qty: 1 });
+      }
+
+      sessionStorage.setItem('cart', JSON.stringify(cart));
+      alert('商品已加入購物車');
+    }
+
+    function goCheckout() {
+      window.location.href = 'checkout.html';
+    }
+  </script>
+
+</body>
+
+</html>
