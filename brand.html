@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Succuleaf_品牌故事</title>
   <link rel="stylesheet" href="./css/index.css">
- <script src="./js/script.js"></script>
+  <script src="./js/script.js"></script>
   <style>
     body {
       line-height: 2;
@@ -15,105 +15,116 @@
 
 
     /* --- 核心區塊樣式 --- */
-.hero.contact {
-  /* 移除超連結預設樣式 */
-  text-decoration: none;
-  color: #333; /* 可依需求調整文字顏色 */
-  
-  /* 佈局設定 */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  
-  /* 尺寸與間距 (電腦版) */
-  width: 35%; 
-  margin: 40vh auto;
-  padding: 5em 2em;
-  text-align: center;
-  
-  /* 視覺外觀 */
-  position: relative;
-  background: rgba(255, 255, 255, 0.66); /* 原 #ffffffa8 */
-  border-radius: 5em;
-  z-index: 1;
-  cursor: pointer;
-  
-  /* 動畫套用在此，讓點擊範圍跟著動 */
-  animation: floatY 6s ease-in-out infinite;
-  transition: background 0.3s ease;
-}
+    .hero.contact {
+      /* 移除超連結預設樣式 */
+      text-decoration: none;
+      color: #333;
+      /* 可依需求調整文字顏色 */
 
-/* 懸停時背景稍微加深 (增加互動感) */
-.hero.contact:hover {
-  background: rgba(255, 255, 255, 0.85);
-}
+      /* 佈局設定 */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
 
-/* 底部模糊光暈效果 */
-.hero.contact::before {
-  content: "";
-  position: absolute;
-  inset: -20px;
-  background: rgba(255, 255, 255, 0.6);
-  filter: blur(20px);
-  border-radius: inherit;
-  z-index: -1;
-}
+      /* 尺寸與間距 (電腦版) */
+      width: 35%;
+      margin: 40vh auto;
+      padding: 5em 2em;
+      text-align: center;
 
-/* 文字微調 */
-.hero.contact h1 {
-  font-size: 2rem;
-  margin: 0 0 0.5em 0;
-  letter-spacing: 2px;
-}
+      /* 視覺外觀 */
+      position: relative;
+      background: rgba(255, 255, 255, 0.66);
+      /* 原 #ffffffa8 */
+      border-radius: 5em;
+      z-index: 1;
+      cursor: pointer;
 
-.hero.contact p {
-  font-size: 1.1rem;
-  margin: 0;
-  opacity: 0.8;
-}
+      /* 動畫套用在此，讓點擊範圍跟著動 */
+      animation: floatY 6s ease-in-out infinite;
+      transition: background 0.3s ease;
+    }
 
-/* --- 浮動動畫 --- */
-@keyframes floatY {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-18px);
-  }
-}
+    /* 懸停時背景稍微加深 (增加互動感) */
+    .hero.contact:hover {
+      background: rgba(255, 255, 255, 0.85);
+    }
 
-/* --- 響應式設計 (Responsive) --- */
+    /* 底部模糊光暈效果 */
+    .hero.contact::before {
+      content: "";
+      position: absolute;
+      inset: -20px;
+      background: rgba(255, 255, 255, 0.6);
+      filter: blur(20px);
+      border-radius: inherit;
+      z-index: -1;
+    }
 
-/* 中型螢幕 (如 iPad) */
-@media (max-width: 1024px) {
-  .hero.contact {
-    width: 60%;
-    padding: 4em 2em;
-  }
-}
+    /* 文字微調 */
+    .hero.contact h1 {
+      font-size: 2rem;
+      margin: 0 0 0.5em 0;
+      letter-spacing: 2px;
+    }
 
-/* 小型螢幕 (如 手機) */
-@media (max-width: 768px) {
-  .hero.contact {
-    width: 85%;           /* 手機版放寬比例，避免文字過擠 */
-    margin: 30vh auto;    /* 稍微縮減上下垂直距離 */
-    padding: 3.5em 1.5em; /* 縮減內距 */
-    border-radius: 3em;   /* 圓角稍微縮小 */
-  }
+    .hero.contact p {
+      font-size: 1.1rem;
+      margin: 0;
+      opacity: 0.8;
+    }
 
-  .hero.contact h1 {
-    font-size: 1.6rem;    /* 縮小標題字體 */
-  }
+    /* --- 浮動動畫 --- */
+    @keyframes floatY {
 
-  .hero.contact p {
-    font-size: 1rem;
-  }
+      0%,
+      100% {
+        transform: translateY(0);
+      }
 
-  .hero.contact::before {
-    inset: -10px;         /* 縮小光暈範圍防止溢出螢幕 */
-  }
-}
+      50% {
+        transform: translateY(-18px);
+      }
+    }
+
+    /* --- 響應式設計 (Responsive) --- */
+
+    /* 中型螢幕 (如 iPad) */
+    @media (max-width: 1024px) {
+      .hero.contact {
+        width: 60%;
+        padding: 4em 2em;
+      }
+    }
+
+    /* 小型螢幕 (如 手機) */
+    @media (max-width: 768px) {
+      .hero.contact {
+        width: 85%;
+        /* 手機版放寬比例，避免文字過擠 */
+        margin: 30vh auto;
+        /* 稍微縮減上下垂直距離 */
+        padding: 3.5em 1.5em;
+        /* 縮減內距 */
+        border-radius: 3em;
+        /* 圓角稍微縮小 */
+      }
+
+      .hero.contact h1 {
+        font-size: 1.6rem;
+        /* 縮小標題字體 */
+      }
+
+      .hero.contact p {
+        font-size: 1rem;
+      }
+
+      .hero.contact::before {
+        inset: -10px;
+        /* 縮小光暈範圍防止溢出螢幕 */
+      }
+    }
 
     .image-text {
       position: relative;
@@ -196,173 +207,77 @@
     }
 
     .centered {
-  margin: 0 auto 10vh;
-  padding: 8em 2em; /* 縮減左右 padding，避免手機版爆開 */
-  border-radius: 13em;
-  width: 80%;
-  background-color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+      margin: 0 auto 10vh;
+      padding: 8em 2em;
+      /* 縮減左右 padding，避免手機版爆開 */
+      border-radius: 13em;
+      width: 80%;
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.centered .title {
-  display: flex;
-  align-items: center;
-  justify-content: center; /* 【新增】確保內部內容水平置中 */
-  gap: 15px;               /* 統一由 gap 控制間距即可 */
-  margin-bottom: 5vh;
-  width: 100%;             /* 【新增】讓 title 撐滿父容器，確保置中基準一致 */
-}
+    .centered .title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* 【新增】確保內部內容水平置中 */
+      gap: 15px;
+      /* 統一由 gap 控制間距即可 */
+      margin-bottom: 5vh;
+      width: 100%;
+      /* 【新增】讓 title 撐滿父容器，確保置中基準一致 */
+    }
 
-.centered h1 {
-  margin: 0;               /* 【修改】移除預設 margin，避免推擠造成的偏移 */
-  font-size: 2.5rem;       /* 建議明確設定字體大小 */
-}
+    .centered h1 {
+      margin: 0;
+      /* 【修改】移除預設 margin，避免推擠造成的偏移 */
+      font-size: 2.5rem;
+      /* 建議明確設定字體大小 */
+    }
 
-.centered img {
-  width: 60px;             /* 【修改】建議給予圖片固定寬度或 max-width，避免縮放比例失控 */
-  height: auto;
-}
+    .centered img {
+      width: 60px;
+      /* 【修改】建議給予圖片固定寬度或 max-width，避免縮放比例失控 */
+      height: auto;
+    }
 
-.centered p {
-  margin: 0 5rem;
-  font-size: 1.25rem;
-  line-height: 1.8;        /* 增加行高，閱讀更舒適 */
-  max-width: 600px;        /* 限制內文寬度，文青感更強 */
-  text-align: center;      /* 文字內容也建議置中 */
-}
+    .centered p {
+      margin: 0 5rem;
+      font-size: 1.25rem;
+      line-height: 1.8;
+      /* 增加行高，閱讀更舒適 */
+      max-width: 600px;
+      /* 限制內文寬度，文青感更強 */
+      text-align: center;
+      /* 文字內容也建議置中 */
+    }
 
-/* 響應式：手機版調整 */
-@media (max-width: 768px) {
-  .centered {
-    width: 90%;
-    padding: 4em 1.5em;
-    border-radius: 5em;    /* 縮小手機版的圓角 */
-  }
-  
-  .centered .title {
-    flex-direction: column; /* 手機版如果太擠，圖片改為上下排列 */
-    gap: 10px;
-  }
+    /* 響應式：手機版調整 */
+    @media (max-width: 768px) {
+      .centered {
+        width: 90%;
+        padding: 4em 1.5em;
+        border-radius: 5em;
+        /* 縮小手機版的圓角 */
+      }
 
-  .centered img {
-    width: 50px;
-  }
-}
+      .centered .title {
+        flex-direction: column;
+        /* 手機版如果太擠，圖片改為上下排列 */
+        gap: 10px;
+      }
+
+      .centered img {
+        width: 50px;
+      }
+    }
 
     .centered p {
       font-size: 1.25rem;
     }
 
-
-    /* Card & Grid */
-    .grid {
-      display: grid;
-      gap: 2rem;
-    }
-
-    @media (min-width: 640px) {
-      .grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    .card {
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: 1.25rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative
-    }
-
-    .card img {
-      width: 30%;
-      margin-bottom: 1rem;
-      border-radius: 1rem;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .card:hover img {
-      transform: scale(1.5);
-      /* Flex 佈局計算完成後，再執行放大 */
-
-      /* 確保放大的圖片能浮在旁邊卡片的上方 */
-      position: relative;
-      /* 啟用 z-index */
-      z-index: 10;
-    }
-
-
-    .card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .card p {
-      color: #555;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .card button {
-      width: 100%;
-      padding: 0.5rem 0;
-      background-color: #333;
-      color: #fff;
-      border: none;
-      border-radius: 1rem;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    .card button:hover {
-      background-color: #555;
-    }
-
-    .checkout-btn {
-      background: linear-gradient(135deg, #2c7590, #0d0d1f);
-      /* 漸層色 */
-      color: white;
-      border: none;
-      padding: 14px 28px;
-      font-size: 1.5rem;
-      font-weight: bold;
-      border-radius: 30px;
-      /* 圓角 */
-      cursor: pointer;
-      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
-      /* 陰影 */
-      transition: all 0.3s ease;
-    }
-
-    .checkout-btn:hover {
-      transform: translateY(-2px);
-      /* 懸浮效果 */
-      box-shadow: 0 12px 30px rgba(79, 70, 229, 0.45);
-    }
-
-    .checkout-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
-    }
-
-
-    /* Footer */
-    footer {
-      padding: 3rem 1rem;
-      text-align: center;
-      color: #666;
-    }
   </style>
 </head>
 
@@ -387,11 +302,11 @@
   </header>
 
   <section id="hero-container">
-  <a class="hero contact" href="#story">
-    <h1>種一點溫度在生活</h1>
-    <p>文青多肉品牌</p>
-  </a>
-</section>
+    <a class="hero contact" href="#story">
+      <h1>種一點溫度在生活</h1>
+      <p>文青多肉品牌</p>
+    </a>
+  </section>
 
   <div class="image-text">
     <img src="./images/index/ads/f2.jpg" alt="">
@@ -469,11 +384,12 @@
     © 2025 SuccuLeaf 多肉生活
   </footer>
 
-<button id="backToTopBtn" title="回到最頂端">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 19V5M5 12l7-7 7 7"/>
+  <button id="backToTopBtn" title="回到最頂端">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7" />
     </svg>
-</button>
+  </button>
 
   <script>
     function addToCart(id, name, price, img) {
