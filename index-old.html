@@ -4,8 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>首頁</title>
+  <title>Succuleaf_首頁</title>
   <link rel="stylesheet" href="./css/index.css">
+  <script src="./js/script.js"></script>
   <style>
     .together {
       height: 1000px;
@@ -27,10 +28,26 @@
       /* 加上 top 才會黏住 */
     }
 
+    /* Scattered → gather 圖片 */
+
+    .succ {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      /* 從上方開始 */
+      transform: translate(-50%, 0);
+      max-width: 150px;
+      transition: transform 0.2s linear, opacity 0.2s linear;
+    }
+
 
     /*左半部廣告輪播 */
     .ads-notice {
       display: flex;
+      /* 讓子元素 (.carousel-container 和 .ads2) 水平並排 */
+      align-items: flex-start;
+      /* 讓子元素從頂端對齊 (預設值，但明確寫出更好) */
+      /* 這裡假設 .ads-notice 已經在您的其他 CSS 中定義了 */
       position: relative;
     }
 
@@ -65,14 +82,141 @@
       flex-shrink: 0;
     }
 
-    .ads-notice .ads2 {
-      padding: 20px;
-      top: 20px;
-      /* ← 這不是 sticky 的 top */
+
+    .ads-notice1 {
+      display: flex;
+      position: relative;
     }
 
-    .ads-notice .ads2 h2 {
+    /* 顯現-起，容器設定：確保圖片重疊在同一個位置 */
+    .carousel-container1 {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 50vw;
+      height: 100vh;
+      overflow: hidden;
+    }
 
+    .carousel1 {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* 初始狀態：隱藏 */
+    .carousel1 img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    /* 當父容器加上 .start-animation 時，子層圖片才執行動畫 */
+    .carousel-container1.start-animation img {
+      animation: individualFadeScale 12s infinite;
+    }
+
+    /* 延遲時間保持不變 */
+    .carousel-container1.start-animation img:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .carousel-container1.start-animation img:nth-child(2) {
+      animation-delay: 3s;
+    }
+
+    .carousel-container1.start-animation img:nth-child(3) {
+      animation-delay: 6s;
+    }
+
+    .carousel-container1.start-animation img:nth-child(4) {
+      animation-delay: 9s;
+    }
+
+    @keyframes individualFadeScale {
+      0% {
+        opacity: 0;
+        transform: scale(0);
+      }
+
+      5% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      25% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      30% {
+        opacity: 0;
+        transform: scale(1.2);
+        /* 消失時稍微再放大一點，會有更有層次感 */
+      }
+
+      100% {
+        /* 剩下的 75% 時間全部隱藏，等待下一輪 */
+        opacity: 0;
+        transform: scale(0);
+      }
+    }
+
+    /*顯現-止*/
+    .ads-notice1 .ads2 {
+      padding: 20px;
+      /* ← 這不是 sticky 的 top */
+      width: 50vw;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 覆蓋層 */
+    .fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(45deg, rgb(217, 255, 147), rgb(100, 200, 255));
+      z-index: -1;
+
+      /* 使用 radial-gradient 做羽化邊緣 */
+      mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+      -webkit-mask-image: radial-gradient(circle at top left, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
+      mask-repeat: no-repeat;
+      -webkit-mask-repeat: no-repeat;
+      mask-position: top left;
+      -webkit-mask-position: top left;
+      mask-size: 0% 0%;
+      /* 初始半徑 0% */
+      -webkit-mask-size: 0% 0%;
+    }
+
+    .fill.active {
+      animation: fillBlue 2s linear forwards;
+    }
+
+    @keyframes fillBlue {
+      0% {
+        mask-size: 0% 0%;
+        -webkit-mask-size: 0% 0%;
+      }
+
+      100% {
+        mask-size: 200% 200%;
+        /* 從左上角擴散填滿整個框 */
+        -webkit-mask-size: 200% 200%;
+      }
+    }
+
+    .ads-notice1 .ads2 h2 {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -87,7 +231,7 @@
       font-weight: large;
     }
 
-    .ads-notice .ads2 h2.show {
+    .ads-notice1 .ads2 h2.show {
       opacity: 1;
       transform: translateY(0);
     }
@@ -126,7 +270,50 @@
       line-height: 1.75rem;
     }
 
-    /*橫向圖片滑動*/
+    .content {
+      position: sticky;
+      top: 0;
+      /* sticky 必須有定位點 */
+      height: 100vh;
+      /* 才能垂直置中 */
+      display: flex;
+      align-items: center;
+      /* 垂直置中 */
+      justify-content: center;
+      /* 水平置中 */
+      z-index: 1;
+      color: white;
+      font-size: 2rem;
+    }
+
+    #plant-layer {
+      position: absolute;
+      inset: 0;
+    }
+
+    #title-block {
+      width: 90%;
+      height: 50%;
+      z-index: 20;
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    #title-block h3 {
+      font-size: 2.25rem;
+      font-weight: bold;
+    }
+
+    #title-block p {
+      color: #4b5563;
+      margin-top: 0.5rem;
+    }
+
+    /*橫向圖片滑動-起*/
     .container {
       width: 80%;
       /* 容器寬度 */
@@ -152,35 +339,8 @@
     }
 
     /*橫向圖片滑動-止*/
-
-
-    /* Card & Grid */
-    .grid {
-      display: grid;
-      gap: 2rem;
-    }
-
-    @media (min-width: 640px) {
-      .grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-
-    /* Footer */
-    footer {
-      padding: 3rem 1rem;
-      text-align: center;
-      color: #666;
-    }
   </style>
 </head>
-
 
 <body>
 
@@ -188,10 +348,11 @@
   <header>
 
     <div style="position: relative;">
-
       <h1 style="font-size: 2.25rem;font-weight: normal;">
-        <img class="logo" src="./images/index/logo.png">
-        <span>SuccuLeaf</span> 一逑葉序
+        <a href="./index.html" style="text-decoration: none; color: inherit;">
+          <img class="logo" src="./images/index/logo.png">
+          <span>SuccuLeaf</span> 溯植綠
+        </a>
       </h1>
     </div>
 
@@ -200,45 +361,48 @@
 
     <nav class="nav-desktop">
       <a href="./brand.html">品牌故事</a>
-      <a href="#gallery">迷你展示</a>
-      <a href="#contact">聯絡我們</a>
+      <a href="./items.html">迷你展示</a>
+      <a href="./contact.html">聯絡我們</a>
     </nav>
   </header>
 
-  <!--分散到聚集的花-->
   <section class="together" style="background-image: url(./images/index/pot.jpg);">
     <div class="together0">
       <div class="ads-notice">
         <div class="carousel-container">
           <div class="carousel">
-            <img src="./images/index/ads/ads1.jpg" alt="">
-            <img src="./images/index/ads/ads2.jpg" alt="">
+            <img src="./images/index/ads/topads4.png" alt="">
+            <img src="./images/index/ads/topads6.png" alt="">
             <img src="./images/index/ads/ads3.jpg" alt="">
             <img src="./images/index/ads/ads5.jpg" alt="">
           </div>
         </div>
-
       </div>
     </div>
+    <!--分散到聚集的花-->
     <div class="together1">
-      <img src="./images/index/items/succ1.png" class="succ" id="s1">
+      <img src="./images/index/succulenturn.png" class="succ" id="s1">
       <img src="./images/index/succulenturn1.png" class="succ" id="s2">
       <img src="./images/index/succulenturn2.png" class="succ" id="s3">
       <img src="./images/index/succulenturn3.png" class="succ" id="s4">
       <img src="../images/index/succulenturn4.png" class="succ" id="s5">
     </div>
   </section>
-  <!--左半部廣告輪播-->
-  <div class="ads-notice">
-    <div class="carousel-container">
-      <div class="carousel">
+
+  <div class="ads-notice1">
+    <!--左半部廣告輪播-->
+    <div class="carousel-container1">
+      <div class="carousel1">
         <img src="./images/index/ads/f2.jpg" alt="">
         <img src="./images/index/ads/f1.jpg" alt="">
         <img src="./images/index/ads/ads3.jpg" alt="">
         <img src="./images/index/ads/f4.jpg" alt="">
       </div>
     </div>
+
+    <!--右半部廣告輪播-->
     <div class="ads2">
+      <div class="fill"></div>
       <h2>
         手作、學習與佈置<br>
         找回生活中的步調, <br>
@@ -247,20 +411,17 @@
     </div>
   </div>
 
-  </div>
-
-
   <!-- Hero -->
   <section class="hero">
     <h2>無論是送禮、擺飾，或是想為自己添一點綠意，<br>
-      「溯植綠」都是最溫暖的選擇。<br>願每一次的挑選，<br>
+      「一畝葉田」都是最溫暖的選擇。<br>願每一次的挑選，<br>
       都能遇見屬於自己的那份幸福。</h2>
   </section>
 
 
   <section id="scroll-area">
     <video class="bg-video" autoplay muted loop playsinline>
-      <source src="./images/index/ads/video2.mp4" type="video/mp4">
+      <source src="./images/index/ads/video2_1.mp4" type="video/mp4">
     </video>
 
     <div class="content">
@@ -294,6 +455,14 @@
 
   <!-- Footer -->
   <footer>© 文青多肉植藝</footer>
+
+  <!-- 回到最頂端 -->
+  <button id="backToTopBtn" title="回到最頂端">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  </button>
 
 
   <script>
@@ -375,6 +544,25 @@
     window.addEventListener("scroll", update);
     update();
 
+    /*到視窗瀏覽範圍顯現圖片*/
+    document.addEventListener("DOMContentLoaded", function () {
+      const container = document.querySelector('.carousel-container1');
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // 進入視窗：啟動輪播
+            entry.target.classList.add('start-animation');
+          } else {
+            // 離開視窗：移除 class，這會強制停止所有動畫並重置狀態
+            entry.target.classList.remove('start-animation');
+          }
+        });
+      }, { threshold: 0.1 }); // 只要露出一點點(10%)就開始
+
+      observer.observe(container);
+    });
+
     /*文字上移浮現*/
 
     const observer = new IntersectionObserver((entries) => {
@@ -384,31 +572,83 @@
           observer.unobserve(entry.target); // 加上這行只播放一次
         }
       });
-    }, { threshold: 0.4 }); // 元素至少 50% 進入視窗才觸發
+    }, { threshold: 0.6 }); // 元素至少 50% 進入視窗才觸發
 
-    const h2Elements = document.querySelectorAll('.ads-notice h2, .hero h2');
+    const h2Elements = document.querySelectorAll('.ads-notice1 h2, .hero h2');
     h2Elements.forEach(h2 => observer.observe(h2));
 
+    //fill
+    const fill = document.querySelector('.fill');
+
+    const observer1 = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          fill.classList.add('active');
+        }
+      });
+    }, { threshold: 0.5 });
+
+    observer1.observe(fill.parentElement);
 
     //橫向滑動
-const scrollWrapper = document.getElementById('scrollWrapper');
-let scrollX = 0;
+    const scrollWrapper = document.getElementById('scrollWrapper');
+    const scrollArea = document.getElementById('scroll-area'); // 新增：取得目標 section 元素
+    let scrollX = 0;
+    let isScrollAreaVisible = false; // 新增：追蹤元素是否可見
 
-window.addEventListener('wheel', (e) => {
-    e.preventDefault(); // 阻止整個頁面滾動
+    // --- Intersection Observer2 API 設置 ---
+    const observer2 = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // 檢查目標元素是否與根元素（通常是視口）相交
+        if (entry.isIntersecting) {
+          // 元素進入視口
+          isScrollAreaVisible = true;
+          // 首次進入時，您可能希望它從最左邊開始
+          // 保持 scrollX = 0 (或根據您的需求調整)
+        } else {
+          // 元素離開視口
+          isScrollAreaVisible = false;
+        }
+      });
+    }, {
+      // rootMargin: '0px', // 預設值，不需要寫
+      threshold: 0.1 // 元素有 10% 進入視口時即觸發
+    });
 
-    const container = document.querySelector('.container');
-    const containerWidth = container.offsetWidth;
-    const contentWidth = scrollWrapper.scrollWidth;
+    // 開始觀察目標元素
+    observer2.observe(scrollArea);
 
-    scrollX -= e.deltaY; // 滾輪向下圖片向左
-     
-    // 限制範圍
-    if(scrollX > 0) scrollX = 0;
-    if(scrollX < containerWidth - contentWidth) scrollX = containerWidth - contentWidth;
 
-    scrollWrapper.style.transform = `translateX(${scrollX}px)`;
-}); // 注意：必須設 passive: false 才能 preventDefault
+    // --- 滾輪事件監聽器 ---
+    window.addEventListener('wheel', (e) => {
+      // 只有當 scrollArea 可見時，才執行圖片滾動邏輯
+      if (isScrollAreaVisible) {
+        e.preventDefault(); // 阻止整個頁面滾動
+
+        const container = document.querySelector('.container');
+        const containerWidth = container.offsetWidth;
+        const contentWidth = scrollWrapper.scrollWidth;
+
+        // 判斷滾動方向：
+        // e.deltaY > 0 表示向下滾動 (預設行為，通常是頁面向下滾動)
+        // e.deltaY < 0 表示向上滾動 (預設行為，通常是頁面向上滾動)
+
+        // 您原來的邏輯是：滾輪向下 (e.deltaY > 0) -> 圖片向左 (scrollX 減小)
+        scrollX -= e.deltaY;
+
+        // 限制範圍：
+        // 1. 最左端 (scrollX = 0)：圖片向右的極限
+        if (scrollX > 0) scrollX = 0;
+
+        // 2. 最右端 (scrollX < containerWidth - contentWidth)：圖片向左的極限
+        // 如果圖片總寬度 contentWidth 小於容器寬度 containerWidth，則 contentWidth - containerWidth 是正數
+        const maxScrollLeft = containerWidth - contentWidth;
+        if (scrollX < maxScrollLeft) scrollX = maxScrollLeft;
+
+        scrollWrapper.style.transform = `translateX(${scrollX}px)`;
+      }
+    });
+
   </script>
 
 </body>
