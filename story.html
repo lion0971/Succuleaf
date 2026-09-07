@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Succuleaf_首頁</title>
+  <link rel="stylesheet" href="./css/index.css">
+  <script src="./js/script.js"></script>
+
+ <style>
+    .brand-story-card {
+      display: flex;
+      max-width: 960px;
+      margin: 2rem auto;
+      background-color: #f9f8f3;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+      font-family: "Noto Serif TC", serif;
+    }
+
+    .card-left {
+      flex: 1;
+      position: relative;
+      min-height: 380px;
+    }
+
+    .card-left img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .handwritten-tag {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: white;
+      font-family: cursive;
+      font-size: 1.5rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-right {
+      flex: 1.2;
+      padding: 3rem;
+      display: flex;
+      align-items: center;
+      position: relative;
+      background-color: #f9f8f3;
+    }
+
+    .content-box {
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    .brand-title h2 {
+      margin: 0;
+      font-size: 1.5rem;
+      color: #2c3e2e;
+      letter-spacing: 1px;
+    }
+
+    .brand-title span {
+      font-weight: normal;
+      font-size: 1.1rem;
+      color: #687b5d;
+      margin-left: 6px;
+    }
+
+    .highlight {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #333;
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .desc {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      font-weight: 700;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 28px;
+      border: 2px solid #687b5d;
+      border-radius: 50px;
+      color: #687b5d;
+      font-weight: 550;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      background-color: #687b5d;
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .bg-illustration {
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    @media (max-width: 768px) {
+      .brand-story-card {
+        flex-direction: column;
+      }
+
+      .card-left {
+        height: 250px;
+      }
+
+      .card-right {
+        padding: 2rem;
+      }
+    }
+
+    /* 讓容器隱藏溢出的圖片部分 */
+.card-left {
+  flex: 1;
+  position: relative;
+  min-height: 380px;
+  overflow: hidden; /* 關鍵：確保放大時不會超出圓角邊框 */
+}
+
+/* 圖片加入縮放過渡動畫 */
+.card-left img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), filter 0.8s ease;
+}
+
+/* 當滑鼠懸停在卡片上時，圖片稍微放大並提升一點亮度 */
+.brand-story-card:hover .card-left img {
+  transform: scale(1.08); /* 放大 1.08 倍 */
+  filter: brightness(1.05); /* 稍微提升亮度 */
+}
+  </style>
+
+</head>
+  <header>
+    <div class="brand">
+      <h1 style="font-size: 2.25rem;font-weight: normal;">
+        <a href="./index.html" style="text-decoration: none; color: inherit;">
+          <img class="logo" src="./images/index/logo.png">
+          <span>SuccuLeaf</span> 溯植綠
+        </a>
+      </h1>
+    </div>
+
+    <nav class="nav-desktop">
+      <a href="./brand.html">品牌故事</a>
+      <a href="./items.html">迷你展示</a>
+      <a href="./contact.html">聯絡我們</a>
+    </nav>
+  </header>
+
+<body>
+  <div class="brand-story-card">
+    <!-- 左側：圖片區 -->
+    <div class="card-left">
+      <img src="https://images.unsplash.com/photo-1459411552884-841db9b3cc2a?q=80&w=1000&auto=format&fit=crop"
+        alt="Succulents" />
+      <span class="handwritten-tag">About Us ♡</span>
+    </div>
+
+    <!-- 右側：內容區 -->
+    <div class="card-right">
+      <div class="content-box">
+        <div class="brand-title">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#687B5D" stroke-width="1.8">
+            <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.4 19 2c1 2 2 4.1 2 9 0 5-4 9-10 9z" />
+            <path d="M11 20v-8" />
+          </svg>
+          <h2>SuccuLeaf <span>多肉生活</span></h2>
+        </div>
+
+        <p class="highlight">
+          SuccuLeaf 來自於對生活的熱愛，生活態度募集中！
+        </p>
+
+        <p class="desc">
+          記得連絡我們加Line獲取最新資訊！
+        </p>
+
+      </div>
+
+      <!-- 右側裝飾插圖 -->
+      <svg class="bg-illustration" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="#687B5D"
+        stroke-width="1">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+      </svg>
+    </div>
+  </div>
+</body>
+
+</html>

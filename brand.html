@@ -142,22 +142,61 @@
       margin-top: 10vw 0;
     }
 
-    .image-text .it1 {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      right: 5vw;
+/* 1. 將整列的位置再往下拉一點 */
+.image-text .text-row {
+  position: absolute;
+  top: 60%;              /* 從 55% 改為 60% 或 62% */
+  left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vw;
+  padding: 0 4vw;
+  box-sizing: border-box;
+}
 
+/* 2. 縮減文章高度，避免卡片整體過高向上拉擠到 Header */
+.image-text .story-text {
+  max-height: 35vh;      /* 原本是 40vh 或 50vh，調小為 35vh */
+  overflow-y: auto;
+  /* 其餘樣式保持不變 */
+}
+
+    /* 通用設定：預設邊欄（第 1 與第 3 個子元素） */
+    .image-text .text-row>* {
+      flex: 1 1 25%;
+      max-width: 25%;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    /* 針對中間欄位（第 2 個子元素）加大寬度 */
+    .image-text .text-row>*:nth-child(2) {
+      flex: 2 1 50%;
+      max-width: 50%;
+    }
+
+    /* 確保中間卡片內部文字高度不會擠爆卡片 */
+    .image-text .text-row .centered {
+      margin: 0;
+      padding: 1.5em;
+      /* 適度縮減頂部內距 */
+      width: 100%;
+      border-radius: 2.5em;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
 
     .image-text .it1 .marquee {
       color: rgb(0, 0, 0);
-      width: 500px;
+      width: 100%;
       height: 300px;
       overflow: hidden;
       /* 超出隱藏 */
       border: 1px solid #ffffff;
       border-radius: 10vh;
+      background: rgba(255, 255, 255, 0.4);
     }
 
     .image-text .it1 .marquee-content {
@@ -186,16 +225,45 @@
     }
 
     .image-text .it2 {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      left: 3vw;
-      margin: 2vw;
-      color: rgb(0, 0, 0);
-      font-size: 25px;
-      font-weight: 500;
+      margin: 0;
+      color: #333333;
+      font-size: 1.5rem;
+      font-weight: 600;
       font-style: oblique;
-      /* 加這行讓文字斜體 */
+      text-align: center;
+
+      /* 移除白底背景與陰影 */
+      background: transparent;
+      box-shadow: none;
+      padding: 0;
+    }
+
+    /* 讓左區 (it2) 和右區 (it1) 垂直置中於中間區塊旁 */
+    .image-text .text-row>.it2,
+    .image-text .text-row>.it1 {
+      align-self: center;
+    }
+
+    .image-text .story-text {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.8;
+      text-align: left;
+      max-height: 40vh;
+      /* 限制內文最大高度，避開卡片頂部 */
+      overflow-y: auto;
+      padding: 1em 1.2em;
+      background: rgba(255, 255, 255, 0.55);
+      border-radius: 1.5em;
+      box-sizing: border-box;
+    }
+
+    .image-text .story-text p {
+      margin: 0 0 1em 0;
+    }
+
+    .image-text .story-text p:last-child {
+      margin-bottom: 0;
     }
 
     .midtext {
@@ -207,7 +275,7 @@
     }
 
     .centered {
-      margin: 0 auto 10vh;
+      margin: 10vh auto 10vh;
       padding: 8em 2em;
       /* 縮減左右 padding，避免手機版爆開 */
       border-radius: 13em;
@@ -269,15 +337,27 @@
         gap: 10px;
       }
 
-      .centered img {
-        width: 50px;
+      .centered .logo-img {
+        width: 45px;
+        display: block;
+        margin: 0 auto;
+      }
+
+
+
+      .image-text img {
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .image-text .story-text {
+        max-height: 40vh;
       }
     }
 
     .centered p {
       font-size: 1.25rem;
     }
-
   </style>
 </head>
 
@@ -301,56 +381,50 @@
     </nav>
   </header>
 
-  <section id="hero-container">
-    <a class="hero contact" href="#story">
-      <h1>種一點溫度在生活</h1>
-      <p>文青多肉品牌</p>
-    </a>
-  </section>
-
   <div class="image-text">
     <img src="./images/index/ads/f2.jpg" alt="">
-    <h2 class="it1">
-      <div class="marquee">
-        <div class="marquee-content">
-          <p>HELLO WORLD</p>
-          <p>TO BE OR</p>
-          <p>NOT TO BE</p>
-          <p>DO THE BEST</p>
-          <p>TO DO GOOD OR</p>
-          <p>NOT TO DO</p>
-          <p>DO MY BEST</p>
-        </div>
-      </div>
 
-    </h2>
-    <h2 class="it2">Inspired by Nature</h2>
+    <div class="text-row">
+      <h2 class="it2">Inspired by Nature</h2>
+
+      <section class="centered">
+        <div class="title">
+          <h1>品牌故事</h1>
+        </div>
+        <div class="story-text">
+          <p>在城市的一角，在繁忙生活裡跌跌撞撞的普通上班族。每天在家庭、通勤、忙不完的工作之間奔波，心裡常被壓得沉，彷彿喘一口完整的氣都需要勇氣。</p>
+
+          <p>直到有一天，下班路上，路邊看見一株被遺忘的小多肉。植物雖然嬌小，卻在夕陽下散發著一抹柔和的綠光，像是輕輕拍著肩，提醒著「殘存的一絲溫柔，還能夠看見」。心頭一暖，把它帶回了家。</p>
+
+          <p>意想不到的是，那株小小的多肉，成為了生活裡第一個讓自己願意慢下來的理由。<br>
+            每天早晨，不再匆忙出門，而是先看看這個小生命，是否長高了些，是否更飽滿了一點。<br>開始注意陽光從窗邊灑下的角度、開始願意放慢節奏去感受呼吸。多肉沒有說話，但悄悄替生活裡留了一個溫暖的空隙。</p>
+
+          <p>漸漸地，發現：原來幸福不需要很大，只要是一點點，就足以照亮心底的角落。於是，決定把這份溫柔分享出去，創立了「SuccuLeaf」，希望每一位被生活追著跑、感到疲憊的你我，都能在這裡找到屬於自己的一抹療癒。</p>
+
+          <p>在店裡，每一株迷你都有自己的小故事：有的象徵堅韌、有的象徵陪伴、有的象徵重新開始。相信，每一株選中的，都會找到與它最契合的主人，像是一份命中註定的小小緣分。</p>
+
+          <p>「溯植綠」不只是賣植物的地方，而是一個讓人重新呼吸、重新與自己對話的溫暖角落。願每個帶走多肉的人，都能在忙碌的生活中，因為這小小的綠意，而重新找回屬於自己的那份小小幸福。</p>
+        </div>
+        <img class="logo-img" src="./images/index/crap.png" alt="">
+      </section>
+
+      <h2 class="it1">
+        <div class="marquee">
+          <div class="marquee-content">
+            <p>HELLO WORLD</p>
+            <p>TO BE OR</p>
+            <p>NOT TO BE</p>
+            <p>DO THE BEST</p>
+            <p>TO DO GOOD OR</p>
+            <p>NOT TO DO</p>
+            <p>DO MY BEST</p>
+          </div>
+        </div>
+      </h2>
+    </div>
   </div>
 
   <h3 class="midtext">Grow with Us</h3>
-
-  <section class="centered" id="story">
-    <div class="title">
-      <img src="./images/index/crap.png" alt="">
-      <h1>品牌故事</h1>
-    </div>
-
-    <p>在城市的一角，在繁忙生活裡跌跌撞撞的普通上班族。每天在家庭、通勤、忙不完的工作之間奔波，心裡常被壓得沉，彷彿喘一口完整的氣都需要勇氣。</p>
-
-    <p>直到有一天，下班路上，路邊看見一株被遺忘的小多肉。植物雖然嬌小，卻在夕陽下散發著一抹柔和的綠光，像是輕輕拍著肩，提醒著「殘存的一絲溫柔，還能夠看見」。心頭一暖，把它帶回了家。</p>
-
-    <p>意想不到的是，那株小小的多肉，成為了生活裡第一個讓自己願意慢下來的理由。<br>>
-      每天早晨，不再匆忙出門，而是先看看這個小生命，是否長高了些，是否更飽滿了一點。<br>開始注意陽光從窗邊灑下的角度、開始願意放慢節奏去感受呼吸。多肉沒有說話，但悄悄替生活裡留了一個溫暖的空隙。</p>
-
-    <p>漸漸地，發現：原來幸福不需要很大，只要是一點點，就足以照亮心底的角落。於是，決定把這份溫柔分享出去，創立了「SuccuLeaf」，希望每一位被生活追著跑、感到疲憊的你我，都能在這裡找到屬於自己的一抹療癒。</p>
-
-    <p>在店裡，每一株迷你都有自己的小故事：有的象徵堅韌、有的象徵陪伴、有的象徵重新開始。相信，每一株選中的，都會找到與它最契合的主人，像是一份命中註定的小小緣分。</p>
-
-    <p>「溯植綠」不只是賣植物的地方，而是一個讓人重新呼吸、重新與自己對話的溫暖角落。願每個帶走多肉的人，都能在忙碌的生活中，因為這小小的綠意，而重新找回屬於自己的那份小小幸福。
-    </p>
-    <p style="height: 5em; display: flex; justify-content: center; align-items: center;font-size:xx-large">-</p>
-
-  </section>
 
   <section
     style="margin-top: 8em;border-radius: 10vh; padding:4rem 1.5rem; max-width:80rem; margin:0 auto; text-align:center;background-color: rgba(255, 255, 255, 0.617)">

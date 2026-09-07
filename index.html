@@ -9,7 +9,7 @@
   <script src="./js/script.js"></script>
   <style>
     .together {
-      height: 1000px;
+      height: 80vh;
       position: relative;
       background-size: cover;
     }
@@ -26,6 +26,8 @@
       position: sticky;
       top: 0;
       /* 加上 top 才會黏住 */
+      z-index: 20;
+      /* 確保過場時不會被後面（文件順序較晚）的區塊蓋住 */
     }
 
     /* Scattered → gather 圖片 */
@@ -40,6 +42,86 @@
       transition: transform 0.2s linear, opacity 0.2s linear;
     }
 
+    .header-banner {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      /* 水平置中 */
+      align-items: center;
+      /* 垂直置中 */
+      padding: 1.5rem 0;
+      /* 上下留白，可依需求調整 */
+      background-color: #ffffff;
+      /* 可設定背景底色 */
+    }
+
+    .logo {
+      max-width: 100%;
+      /* 確保手機版不會超出螢幕寬度 */
+      height: auto;
+      /* 維持圖片原本的長寬比，不拉伸變形 */
+      display: block;
+      /* 消除 img 預設底部的微小空隙 */
+    }
+
+    .logo1 {
+      max-width: 100%;
+      /* 確保手機版不會超出螢幕寬度 */
+      height: 50px;
+      /* 維持圖片原本的長寬比，不拉伸變形 */
+      /*display: block;*/
+      /* 消除 img 預設底部的微小空隙 */
+    }
+
+    .about-container {
+      position: relative;
+      /* 👈 關鍵：作為按鈕 absolute 定位的基準 */
+      display: inline-block;
+      /* 或 width: 100%; 依據你的版面需求 */
+      width: 100%;
+    }
+
+    .about-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .btn-outline {
+      /* 定位設定 */
+      position: absolute;
+      top: 78%;
+      /* 👈 垂直位置：根據圖片位置微調（數字越大越靠下） */
+      left: 56%;
+      /* 👈 水平位置：根據圖片位置微調（數字越大越靠右） */
+
+      /* 按鈕樣式 (保留你原本的設定) */
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+
+      padding: 10px 26px;
+
+      border: 1.5px solid #687b5d;
+      border-radius: 50px;
+
+      color: #687b5d;
+      background-color: transparent;
+      /* 確保背景透明，露出底圖 */
+      text-decoration: none;
+      /* 移除超連結底線 */
+      font-size: 1rem;
+      font-weight: 500;
+
+      transition: all .3s ease;
+      cursor: pointer;
+    }
+
+    .btn-outline:hover {
+      background: #687b5d;
+      color: white;
+      transform: translateY(-2px);
+    }
 
     /*左半部廣告輪播 */
     .ads-notice {
@@ -85,6 +167,12 @@
       height: 100vh;
       overflow: hidden;
       position: relative;
+    }
+
+    /* 只針對這個特定區塊：把輪播和右側說明區的高度都改成原本 100vh 的三分之二 */
+    .ads-notice--compact .carousel-container,
+    .ads-notice--compact .ads2 {
+      height: calc(100vh * 2 / 3);
     }
 
     /* 覆蓋層 */
@@ -142,11 +230,11 @@
       text-align: center;
       line-height: 2em;
       width: 50vw;
-      height: 100vh;
+      height: 100%;
       padding: 0 10vw;
       opacity: 0;
       transform: translateY(30px);
-      transition: all 0.8s ease-out;
+      transition: opacity 0.4s ease-out, transform 0.4s ease-out;
       font-weight: large;
     }
 
@@ -157,6 +245,10 @@
 
     /* ===== Hero Section ===== */
     .hero {
+      position: relative;
+      z-index: 30;
+      /* 高於 .together1（花朵，z-index:20），確保 .fill 跟文字整組都在花朵上層 */
+      width: 20%;
       height: 30vh;
       display: flex;
       flex-direction: column;
@@ -167,14 +259,61 @@
     }
 
     .hero h2 {
+      position: relative;
+      /* 作為 ::before 方框的定位基準 */
+      z-index: 1;
+      /* 明確數字才會建立獨立堆疊層，讓內部的 ::before 穩定排在 .fill 之上 */
       font-weight: large;
       color: #00271c;
 
       line-height: 2;
       opacity: 0;
       transform: translateY(30px);
-      transition: all 0.8s ease-out;
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
       font-weight: large;
+    }
+
+    /* 環繞文字的線圈（SVG 橢圓），預設完全隱藏（描邊進度為 0） */
+    .hero h2 .ring {
+      position: absolute;
+      /* 利用 50% + translate(-50%, -50%) 強制幾何點完全重疊 */
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+
+      /* 這裡直接自由控制橢圓的大小 */
+      width: calc(100% + 4em);
+      /* 水平總寬度 */
+      height: calc(100% + 6em);
+      /* 垂直總高度 */
+
+      overflow: visible;
+      pointer-events: none;
+      z-index: -1;
+
+      /* ... 原本定位 CSS ... */
+      backdrop-filter: blur(4px);
+      /* 讓背景花朵或圖片變模糊 */
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 50%;
+      /* 確保毛玻璃範圍符合橢圓外框 */
+    }
+
+    .hero h2 .ring ellipse {
+      fill: none;
+      stroke: #00271c;
+      stroke-width: 0.6;
+      stroke-linecap: round;
+      stroke-dasharray: 100;
+      /* 搭配 ellipse 的 pathLength="100"，方便用百分比控制 */
+      stroke-dashoffset: 100;
+      /* 100 = 完全沒畫出來 */
+      transition: stroke-dashoffset 1.2s ease-out;
+    }
+
+    .hero h2.show .ring ellipse {
+      stroke-dashoffset: 0;
+      /* 0 = 完整畫完一整圈 */
     }
 
     .hero h2.show {
@@ -205,11 +344,6 @@
       font-size: 2rem;
     }
 
-    #plant-layer {
-      position: absolute;
-      inset: 0;
-    }
-
     #title-block {
       width: 90%;
       height: 50%;
@@ -230,6 +364,12 @@
     #title-block p {
       color: #4b5563;
       margin-top: 0.5rem;
+    }
+
+    #title-block h4 {
+      font-size: 2rem;
+      font-weight: bold;
+      padding: auto;
     }
 
     /*橫向圖片滑動-起*/
@@ -256,15 +396,78 @@
       margin-right: 10px;
       object-fit: cover;
     }
+
     /*橫向圖片滑動-止*/
+
+    /* ===== Header 縮小效果 =====
+       改用 CSS Grid 讓 .brand（置中）與 .nav-desktop（靠左）疊在同一格，
+       全部用相對單位（justify-self / auto）運算，不寫死任何 px/rem 座標，
+       所以不管視窗寬度、字體大小如何都不會跑版或偏移。
+       尺寸（min-height / padding）連續漸變，
+       同時疊加短暫的半透明淡化來柔化排版模式（flex/grid）切換那一刻的跳動，
+       但不會完全消失，感覺是「平滑縮放 + 輕微柔焦」而不是「消失再出現」。 */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 9rem;
+      /* 保留原本未縮小時的高度感，可依實際視覺再調整這個數字 */
+      transition: padding 0.35s ease, min-height 0.35s ease, opacity 0.35s ease;
+    }
+
+    /* 未縮小狀態：讓 nav 脫離文件流貼齊底部，
+       這樣不會影響標題在 flex 容器中的垂直置中。 */
+    header .nav-desktop {
+      position: absolute;
+      left: 1.5rem;
+      /* 對齊 index.css 原本 header 的左側 padding */
+      bottom: 1rem;
+      /* 貼齊 header 底部的距離，可依實際視覺微調 */
+    }
+
+    header.shrink {
+      display: grid;
+      grid-template-columns: 1fr;
+      /* 讓這一欄撐滿整個 header 寬度 */
+      justify-content: stretch;
+      /* 覆蓋放大狀態的 justify-content: center */
+      align-items: center;
+      min-height: 0;
+      /* 取消 9rem 限制，讓縮小狀態可以正常收合 */
+      padding: 0.6rem 1.5rem;
+    }
+
+    header.shrink .brand,
+    header.shrink .nav-desktop {
+      grid-column: 1;
+      grid-row: 1;
+      position: static;
+      /* 取消先前 absolute 定位，改回讓 grid 控制 */
+    }
+
+    header.shrink .brand {
+      justify-self: center;
+    }
+
+    header.shrink .nav-desktop {
+      justify-self: start;
+    }
   </style>
 </head>
-<body>
 
+<body>
+  <div class="about-container">
+    <!-- 背景圖片（包含文字與插圖） -->
+    <img src="./images/index/ads/header.png" alt="About Us" class="about-img">
+
+    <!-- 了解更多按鈕 -->
+    <a href="./story.html" class="btn-outline">
+      了解更多 <span>→</span>
+    </a>
+  </div>
   <!-- Header -->
   <header>
-
-    <div style="position: relative;">
+    <div class="brand">
       <h1 style="font-size: 2.25rem;font-weight: normal;">
         <a href="./index.html" style="text-decoration: none; color: inherit;">
           <img class="logo" src="./images/index/logo.png">
@@ -273,9 +476,6 @@
       </h1>
     </div>
 
-
-
-
     <nav class="nav-desktop">
       <a href="./brand.html">品牌故事</a>
       <a href="./items.html">迷你展示</a>
@@ -283,19 +483,21 @@
     </nav>
   </header>
 
+
+
   <section class="together" style="background-image: url(./images/index/pot.jpg);">
-    <div class="together0">
+    <!-- <div class="together0">
       <div class="ads-notice">
         <div class="carousel-container">
           <div class="carousel">
-            <img src="./images/index/ads/topads4.png" alt="">
+            <img src="./images/index/ads/20260905-5.jpg" alt="">
             <img src="./images/index/ads/topads6.png" alt="">
-            <img src="./images/index/ads/ads3.jpg" alt="">
-            <img src="./images/index/ads/ads5.jpg" alt="">
+            <img src="./images/index/ads/20260905-6.png" alt="">
+            <img src="./images/index/ads/20260905-poster.png" alt="">
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!--分散到聚集的花-->
     <div class="together1">
       <img src="./images/index/succulenturn.png" class="succ" id="s1">
@@ -306,35 +508,39 @@
     </div>
   </section>
 
-  <div class="ads-notice">
+  <div class="ads-notice ads-notice--compact">
     <!--左半部廣告輪播-->
     <div class="carousel-container">
       <div class="carousel">
-        <img src="./images/index/ads/f2.jpg" alt="">
-        <img src="./images/index/ads/f1.jpg" alt="">
-        <img src="./images/index/ads/ads3.jpg" alt="">
-        <img src="./images/index/ads/f4.jpg" alt="">
+        <img src="./images/index/ads//20260905-1.jpg" alt="">
+        <img src="./images/index/ads/20260905-2.jpg" alt="">
+        <img src="./images/index/ads/20260905-3.jpg" alt="">
+        <img src="./images/index/ads/20260905-4.jpg" alt="">
       </div>
     </div>
+
+    <!-- Hero -->
+    <section class="hero">
+      <h2>
+        <svg class="ring" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <ellipse cx="50" cy="50" rx="48" ry="45" pathLength="100" />
+        </svg>
+        營業時間<br>
+        週二至週日<br>
+        10:00 – 22:00<br>
+      </h2>
+    </section>
 
     <!--右半部廣告輪播-->
     <div class="ads2">
       <div class="fill"></div>
       <h2>
-        手作、學習與佈置<br>
-        找回生活中的步調, <br>
-        以綠意點亮生活的每一處角落。
+        一段與自己對話的時光。<br>
+        手作課程，療癒小品，<br>
+        療癒美好
       </h2>
     </div>
   </div>
-
-  <!-- Hero -->
-  <section class="hero">
-    <h2>無論是送禮、擺飾，或是想為自己添一點綠意，<br>
-      「一畝葉田」都是最溫暖的選擇。<br>願每一次的挑選，<br>
-      都能遇見屬於自己的那份幸福。</h2>
-  </section>
-
 
   <section id="scroll-area">
     <video class="bg-video" autoplay muted loop playsinline>
@@ -342,27 +548,24 @@
     </video>
 
     <div class="content">
-      <div id="plant-layer"></div>
 
       <div id="title-block">
-        <h3>群聚律動</h3>
-        <p>Slow down 與花草共呼吸</p>
+        <h3>Slow Down</h3>
+        <p>與花，草間</p>
         <div class="container" id="container">
           <div class="scroll-wrapper" id="scrollWrapper">
             <img src="./images/index/ads/f1.jpg" alt="plant">
-            <img src="./images/index/ads/f2.jpg" alt="plant">
             <img src="./images/index/ads/f3.jpg" alt="plant">
-            <img src="./images/index/ads/f4.jpg" alt="plant">
-            <img src="./images/index/ads/f1.jpg" alt="plant">
+            <img src="./images/index/ads/ads5.jpg" alt="plant">
+            <img src="./images/index/ads/ads3.jpg" alt="plant">
             <img src="./images/index/ads/f2.jpg" alt="plant">
-            <img src="./images/index/ads/f3.jpg" alt="plant">
             <img src="./images/index/ads/f4.jpg" alt="plant">
           </div>
         </div>
+        <h4>Since 2006</h4>
       </div>
     </div>
   </section>
-
 
   <!-- Contact -->
   <section id="contact" class="container">
@@ -371,7 +574,7 @@
   </section>
 
   <!-- Footer -->
-  <footer>© 文青多肉植藝</footer>
+  <footer>© 溯植綠多肉植藝</footer>
 
   <!-- 回到最頂端 -->
   <button id="backToTopBtn" title="回到最頂端">
@@ -383,6 +586,48 @@
 
 
   <script>
+    // header 隨滾動縮放（加上遲滯區間 + rAF 節流，避免抖動）
+    // 尺寸（min-height/padding）連續漸變；同時疊加短暫的淡化來柔化
+    // flex/grid 排版模式切換那一刻的跳動，但不會完全消失。
+    const header = document.querySelector('header');
+    const SHRINK_ON = 80;   // 滑超過這個距離才「開始」縮小
+    const SHRINK_OFF = 40;  // 滑回小於這個距離才「恢復」原狀（比 SHRINK_ON 小，形成緩衝區間）
+
+    function setShrink(shouldShrink) {
+      const isShrunk = header.classList.contains('shrink');
+      if (isShrunk === shouldShrink) return; // 狀態沒變就不重複觸發
+
+      header.classList.toggle('shrink', shouldShrink); // 立即切換，讓 padding/min-height 開始連續漸變
+
+      // 疊加短暫的半透明淡化，柔化排版模式切換那一刻的跳動（不會完全消失）
+      header.style.opacity = '0.4';
+      requestAnimationFrame(() => {
+        header.style.opacity = '1';
+      });
+    }
+
+    let ticking = false;
+
+    function updateHeader() {
+      const y = window.scrollY;
+
+      if (y > SHRINK_ON) {
+        setShrink(true);
+      } else if (y < SHRINK_OFF) {
+        setShrink(false);
+      }
+      // 介於 SHRINK_OFF 與 SHRINK_ON 之間時，維持目前狀態不變，避免來回抖動
+
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeader);
+        ticking = true;
+      }
+    });
+
     // <!-- Framer Motion Animation -->
     const carousels = document.querySelectorAll('.carousel');
 
@@ -424,7 +669,26 @@
         }
       });
 
-      setInterval(nextSlide, interval);
+      // ===== 自動輪播：可暫停 / 恢復 =====
+      let timerId = null;
+
+      function startAutoplay() {
+        if (timerId !== null) return; // 已經在跑就不重複建立
+        timerId = setInterval(nextSlide, interval);
+      }
+
+      function stopAutoplay() {
+        clearInterval(timerId);
+        timerId = null;
+      }
+
+      startAutoplay();
+
+      // 點擊/觸碰這個輪播時，先暫停自動播放
+      carousel.addEventListener("click", stopAutoplay);
+
+      // 使用者滾動頁面（移動畫面）時，如果目前是暫停狀態就恢復播放
+      window.addEventListener("scroll", startAutoplay, { passive: true });
     });
 
 
@@ -440,14 +704,24 @@
       });
     }
 
+    // 花朵聚集完成後的最終位置（固定值，不會再跟著滾動移動）。
+    // 之後想調整聚集位置，只要改這個數字就好：數字越大，聚集點越往下。
+    const GATHER_Y = 300;
+
+    // 滾動多少距離（px）動畫才會跑完（p 從 0 到 1）。
+    // 數字越小 → 滾一樣的距離動畫跑得越快；數字越大 → 動畫跑得越慢。
+    // 目前設成 1 個視窗高度，可以改成固定數字（例如 800）或視窗高度的倍數（例如 window.innerHeight * 1.5）。
+    const SCROLL_RANGE = window.innerHeight;
+
     function update() {
-      const p = Math.min(1, window.scrollY / window.innerHeight);
+      const p = Math.min(1, window.scrollY / SCROLL_RANGE);
 
       imgs.forEach(obj => {
-        const gatherY = 150; // ← 聚集位置往下 200px
-
         const tx = obj.x * (1 - p);
-        const ty = obj.y * (1 - p) + gatherY;
+        // 在「起始分散位置 obj.y」跟「聚集後的最終位置 GATHER_Y」之間插值，
+        // p=0 時 ty = obj.y（起始位置不受 GATHER_Y 影響）
+        // p=1 時 ty = GATHER_Y（完全聚集到目標位置）
+        const ty = obj.y * (1 - p) + GATHER_Y * p;
 
         const r = obj.rot + p * 360;
 
@@ -470,82 +744,69 @@
           observer.unobserve(entry.target); // 加上這行只播放一次
         }
       });
-    }, { threshold: 0.6 }); // 元素至少 50% 進入視窗才觸發
+    }, { threshold: 0.35 }); // 稍微延後觸發時機（比 0.2 晚一點，但不用等到 0.6）
 
     const h2Elements = document.querySelectorAll('.ads-notice h2, .hero h2');
     h2Elements.forEach(h2 => observer.observe(h2));
 
     //fill
-    const fill = document.querySelector('.fill');
+    const fills = document.querySelectorAll('.fill');
 
     const observer1 = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          fill.classList.add('active');
+          const fillEl = entry.target.querySelector('.fill');
+          if (fillEl) fillEl.classList.add('active');
         }
       });
     }, { threshold: 0.5 });
 
-    observer1.observe(fill.parentElement);
+    fills.forEach(fill => observer1.observe(fill.parentElement));
 
     //橫向滑動
     const scrollWrapper = document.getElementById('scrollWrapper');
-    const scrollArea = document.getElementById('scroll-area'); // 新增：取得目標 section 元素
+    const contentEl = document.querySelector('.content'); // 改用「圖片區真正所在」的 .content 作為判斷基準
     let scrollX = 0;
-    let isScrollAreaVisible = false; // 新增：追蹤元素是否可見
 
-    // --- Intersection Observer2 API 設置 ---
-    const observer2 = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        // 檢查目標元素是否與根元素（通常是視口）相交
-        if (entry.isIntersecting) {
-          // 元素進入視口
-          isScrollAreaVisible = true;
-          // 首次進入時，您可能希望它從最左邊開始
-          // 保持 scrollX = 0 (或根據您的需求調整)
-        } else {
-          // 元素離開視口
-          isScrollAreaVisible = false;
-        }
-      });
-    }, {
-      // rootMargin: '0px', // 預設值，不需要寫
-      threshold: 0.1 // 元素有 10% 進入視口時即觸發
-    });
-
-    // 開始觀察目標元素
-    observer2.observe(scrollArea);
+    // .content 是 position: sticky; top: 0；只要它「正被釘在頂端」（rect.top 約等於 0），
+    // 就代表圖片區真的定住在視窗正中間（.content 內部本身用 flex 置中排版）。
+    // 還沒開始被釘住（top > 0，還在自然滑入）或已經釘完離開（top < 0），都不算「在中間」，不鎖定畫面。
+    function isContentPinned() {
+      const rect = contentEl.getBoundingClientRect();
+      return Math.abs(rect.top) < 1; // 容許 1px 以內的誤差
+    }
 
 
     // --- 滾輪事件監聽器 ---
     window.addEventListener('wheel', (e) => {
-      // 只有當 scrollArea 可見時，才執行圖片滾動邏輯
-      if (isScrollAreaVisible) {
-        e.preventDefault(); // 阻止整個頁面滾動
+      // 只有當圖片區真的被釘在視窗正中間時，才執行圖片滾動邏輯
+      if (!isContentPinned()) return;
 
-        const container = document.querySelector('.container');
-        const containerWidth = container.offsetWidth;
-        const contentWidth = scrollWrapper.scrollWidth;
+      const container = document.querySelector('.container');
+      const containerWidth = container.offsetWidth;
+      const contentWidth = scrollWrapper.scrollWidth;
+      const maxScrollLeft = containerWidth - contentWidth;
 
-        // 判斷滾動方向：
-        // e.deltaY > 0 表示向下滾動 (預設行為，通常是頁面向下滾動)
-        // e.deltaY < 0 表示向上滾動 (預設行為，通常是頁面向上滾動)
+      const scrollingDown = e.deltaY > 0;
+      const atEnd = scrollX <= maxScrollLeft;   // 圖片已經滑到最右邊（全部看完）
+      const atStart = scrollX >= 0;             // 圖片還在最左邊（都還沒開始滑）
 
-        // 您原來的邏輯是：滾輪向下 (e.deltaY > 0) -> 圖片向左 (scrollX 減小)
-        scrollX -= e.deltaY;
+      // 已經到底、且使用者繼續往同方向滾 → 放行，讓視窗往該方向繼續移動
+      if (scrollingDown && atEnd) return;
+      if (!scrollingDown && atStart) return;
 
-        // 限制範圍：
-        // 1. 最左端 (scrollX = 0)：圖片向右的極限
-        if (scrollX > 0) scrollX = 0;
+      // 圖片還沒滑到底 → 完全鎖住畫面，只移動圖片，避免任何漏出去的捲動造成抖動
+      e.preventDefault();
 
-        // 2. 最右端 (scrollX < containerWidth - contentWidth)：圖片向左的極限
-        // 如果圖片總寬度 contentWidth 小於容器寬度 containerWidth，則 contentWidth - containerWidth 是正數
-        const maxScrollLeft = containerWidth - contentWidth;
-        if (scrollX < maxScrollLeft) scrollX = maxScrollLeft;
+      // 您原來的邏輯是：滾輪向下 (e.deltaY > 0) -> 圖片向左 (scrollX 減小)
+      scrollX -= e.deltaY;
 
-        scrollWrapper.style.transform = `translateX(${scrollX}px)`;
-      }
-    });
+      // 限制範圍：
+      if (scrollX > 0) scrollX = 0;
+      if (scrollX < maxScrollLeft) scrollX = maxScrollLeft;
+
+      scrollWrapper.style.transform = `translateX(${scrollX}px)`;
+    }, { passive: false }); // 明確設為非被動，確保 preventDefault 一定生效
 
   </script>
 
